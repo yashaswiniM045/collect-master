@@ -5,6 +5,7 @@ import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import SearchBar from "../components/SearchBar";
 import MovieCard from "../components/MovieCard";
+import CompareBar from "../components/CompareBar";
 
 function Home() {
   const [movies, setMovies] = useState([]);
@@ -83,6 +84,8 @@ function Home() {
             <p>No search results</p>
           )}
         </div>
+
+        <CompareBar />
 
         <h1 className="section-title">Recommended Movies</h1>
 

@@ -4,10 +4,32 @@ import {
   getCollections,
   addMovieToCollection,
 } from "../services/collectionService";
+import { useCompare } from "../context/CompareContext";
 
 function MovieCard({ movie }) {
   const [collections, setCollections] = useState([]);
   const [selectedCollection, setSelectedCollection] = useState("");
+  const { addToCompare, removeFromCompare, isSelected } = useCompare();
+
+  const movieId = movie.imdbID || movie.movie_id || movie.title;
+  const compareSelected = isSelected(movieId);
+
+  const handleCompareClick = () => {
+    if (compareSelected) {
+      removeFromCompare(movieId);
+      return;
+    }
+
+    const added = addToCompare({
+      imdbID: movieId,
+      title: movie.title,
+      poster: movie.poster,
+    });
+
+    if (!added) {
+      alert("You can only compare 2 movies at a time.");
+    }
+  };
 
   useEffect(() => {
     loadCollections();
@@ -226,6 +248,13 @@ function MovieCard({ movie }) {
           onClick={getReviews}
         >
           👁 View Reviews
+        </button>
+
+        <button
+          className={`compare-btn ${compareSelected ? "selected" : ""}`}
+          onClick={handleCompareClick}
+        >
+          {compareSelected ? "Remove Compare" : "Compare"}
         </button>
 
         <select

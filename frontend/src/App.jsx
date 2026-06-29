@@ -8,6 +8,7 @@ import {
 
 // Pages
 import Home from "./pages/Home";
+import CompareMovies from "./pages/CompareMovies";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Favorites from "./pages/Favorites";
@@ -25,21 +26,35 @@ import Notifications from "./pages/Notifications";
 import ProtectedRoute from "./router";
 import AdminRoute from "./components/AdminRoute";
 
+// Context
+import { CompareProvider } from "./context/CompareContext";
+
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
+    <CompareProvider>
+      <BrowserRouter>
+        <Routes>
 
-        {/* Public Routes */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+          {/* Public Routes */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
 
-        {/* Home */}
+          {/* Home */}
         <Route
           path="/"
           element={
             <ProtectedRoute>
               <Home />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Compare */}
+        <Route
+          path="/compare"
+          element={
+            <ProtectedRoute>
+              <CompareMovies />
             </ProtectedRoute>
           }
         />
@@ -136,12 +151,10 @@ function App() {
 
         {/* Redirect Unknown Routes */}
         <Route path="*" element={<Navigate to="/" replace />} />
-
-<Route path="/notifications" element={<Notifications />} />
-
-<Route path="/notifications" element={<Notifications />} />
+        <Route path="/notifications" element={<Notifications />} />
       </Routes>
     </BrowserRouter>
+  </CompareProvider>
   );
 }
 
