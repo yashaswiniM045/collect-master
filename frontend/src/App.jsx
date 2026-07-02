@@ -15,6 +15,7 @@ import Favorites from "./pages/Favorites";
 import History from "./pages/History";
 import Profile from "./pages/Profile";
 import Watchlist from "./pages/Watchlist";
+import WatchedHistory from "./pages/WatchedHistory";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminUsers from "./pages/AdminUsers";
 import AdminReviews from "./pages/AdminReviews";
@@ -28,12 +29,14 @@ import AdminRoute from "./components/AdminRoute";
 
 // Context
 import { CompareProvider } from "./context/CompareContext";
+import { ToastProvider } from "./context/ToastContext";
 
 function App() {
   return (
-    <CompareProvider>
-      <BrowserRouter>
-        <Routes>
+    <ToastProvider>
+      <CompareProvider>
+        <BrowserRouter>
+          <Routes>
 
           {/* Public Routes */}
           <Route path="/login" element={<Login />} />
@@ -99,6 +102,16 @@ function App() {
           }
         />
 
+        {/* Watched History */}
+        <Route
+          path="/watched-history"
+          element={
+            <ProtectedRoute>
+              <WatchedHistory />
+            </ProtectedRoute>
+          }
+        />
+
         {/* Collections */}
         <Route
           path="/collections"
@@ -153,8 +166,9 @@ function App() {
         <Route path="*" element={<Navigate to="/" replace />} />
         <Route path="/notifications" element={<Notifications />} />
       </Routes>
-    </BrowserRouter>
-  </CompareProvider>
+      </BrowserRouter>
+    </CompareProvider>
+    </ToastProvider>
   );
 }
 

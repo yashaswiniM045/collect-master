@@ -7,6 +7,7 @@ function Sidebar() {
       <Link to="/">🏠 Home</Link>
       <Link to="/favorites">❤️ Favorites</Link>
       <Link to="/history">🕒 History</Link>
+      <Link to="/watched-history">✅ Watched History</Link>
       <Link to="/watchlist">📺Watchlist</Link>
       <Link to="/collections">📁Collections</Link>
       <Link to="/profile">👤 Profile</Link>

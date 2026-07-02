@@ -2,7 +2,7 @@ import axios from "axios";
 
 // Base API URL
 const API = axios.create({
-   baseURL: "http://127.0.01:8000",
+  baseURL: import.meta.env.VITE_API_URL || "http://127.0.0.1:8000",
 });
 
 // Add token automatically
@@ -10,14 +10,11 @@ API.interceptors.request.use(
 
   (config) => {
 
-    const token =
-      localStorage.getItem("token");
+    const token = localStorage.getItem("token") || localStorage.getItem("access_token");
+    config.headers = config.headers || {};
 
     if (token) {
-
-      config.headers.Authorization =
-        `Bearer ${token}`;
-
+      config.headers.Authorization = `Bearer ${token}`;
     }
 
     return config;

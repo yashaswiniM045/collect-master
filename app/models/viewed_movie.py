@@ -23,12 +23,24 @@ class ViewedMovie(Base):
         nullable=False
     )
 
+    movie_id = Column(
+        String(255),
+        nullable=False
+    )
+
     movie_title = Column(
         String(255),
         nullable=False
     )
 
+    poster = Column(
+        String(500),
+        nullable=True
+    )
+
     genre = Column(String(100))
+
+    imdb_rating = Column(String(50), nullable=True)
 
     viewed_at = Column(
         DateTime(timezone=True),

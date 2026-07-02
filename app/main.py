@@ -4,6 +4,7 @@ from sqlalchemy import false
 
 from app.database import Base, engine
 from app import models
+from sqlalchemy import text
 
 # Import models so SQLAlchemy creates the tables
 from app.models.collection import Collection, CollectionMovie
@@ -26,6 +27,8 @@ from app.routes import (
     collections,
     notification,
     reviews,
+    watched_history,
+    watched,
 )
 
 # =========================
@@ -37,6 +40,17 @@ from app.routes.admin import router as admin_router
 # CREATE DATABASE TABLES
 # =========================
 Base.metadata.create_all(bind=engine)
+
+# Runtime migration: ensure `movie_id` column exists on viewed_movies (dev convenience)
+try:
+    with engine.connect() as conn:
+        res = conn.execute(text("PRAGMA table_info('viewed_movies')")).fetchall()
+        cols = [row[1] for row in res]
+        if "movie_id" not in cols:
+            print("[migrations] adding movie_id column to viewed_movies")
+            conn.execute(text("ALTER TABLE viewed_movies ADD COLUMN movie_id VARCHAR(255)"))
+except Exception as e:
+    print("[migrations] failed to ensure viewed_movies columns:", e)
 
 # =========================
 # FASTAPI APP
@@ -70,6 +84,8 @@ app.include_router(reviews.router)
 app.include_router(profile.router)
 app.include_router(collections.router)
 app.include_router(notification.router)
+app.include_router(watched_history.router)
+app.include_router(watched.router)
 
 # =========================
 # ADMIN ROUTES

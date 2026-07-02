@@ -27,15 +27,9 @@ function Login() {
       console.log("LOGIN RESPONSE:", response.data);
 
       // Save JWT Token
-     localStorage.setItem(
-  "token",
-  response.data.access_token
-);
-
-localStorage.setItem(
-  "user",
-  JSON.stringify(response.data.user)
-);
+      localStorage.setItem("token", response.data.access_token);
+      localStorage.setItem("access_token", response.data.access_token);
+      localStorage.setItem("user", JSON.stringify(response.data.user));
 
       // Save User
       localStorage.setItem(

@@ -1,54 +1,21 @@
-import axios from "axios";
-
-const API = "http://127.0.0.1:8000";
-
-const getToken = () => localStorage.getItem("token");
+import API from "./api";
 
 export const getNotifications = async () => {
-  const res = await axios.get(`${API}/notifications`, {
-    headers: {
-      Authorization: `Bearer ${getToken()}`
-    }
-  });
-
+  const res = await API.get("/notifications");
   return res.data;
 };
 
 export const markAsRead = async (id) => {
-  const res = await axios.patch(
-    `${API}/notifications/${id}/read`,
-    {},
-    {
-      headers: {
-        Authorization: `Bearer ${getToken()}`
-      }
-    }
-  );
-
+  const res = await API.patch(`/notifications/${id}/read`);
   return res.data;
 };
 
 export const deleteNotification = async (id) => {
-  const res = await axios.delete(
-    `${API}/notifications/${id}`,
-    {
-      headers: {
-        Authorization: `Bearer ${getToken()}`
-      }
-    }
-  );
-
+  const res = await API.delete(`/notifications/${id}`);
   return res.data;
 };
-export const getUnreadCount = async () => {
-  const res = await axios.get(
-    `${API}/notifications/unread-count`,
-    {
-      headers: {
-        Authorization: `Bearer ${getToken()}`
-      }
-    }
-  );
 
+export const getUnreadCount = async () => {
+  const res = await API.get("/notifications/unread-count");
   return res.data;
 };

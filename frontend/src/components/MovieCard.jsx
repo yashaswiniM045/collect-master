@@ -5,6 +5,7 @@ import {
   addMovieToCollection,
 } from "../services/collectionService";
 import { useCompare } from "../context/CompareContext";
+import MarkAsWatchedButton from "./MarkAsWatchedButton";
 
 function MovieCard({ movie }) {
   const [collections, setCollections] = useState([]);
@@ -256,6 +257,8 @@ function MovieCard({ movie }) {
         >
           {compareSelected ? "Remove Compare" : "Compare"}
         </button>
+
+        <MarkAsWatchedButton movie={movie} />
 
         <select
           value={selectedCollection}

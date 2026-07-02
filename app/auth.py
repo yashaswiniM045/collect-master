@@ -62,6 +62,11 @@ def get_current_user(
     )
 
     try:
+        # Debug: log the raw token received from the Authorization header
+        try:
+            print(f"[auth.get_current_user] token: {token}")
+        except Exception:
+            pass
         payload = jwt.decode(
             token,
             SECRET_KEY,
